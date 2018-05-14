@@ -5,10 +5,10 @@ var houseController = require('../controllers/house.controller');
 
 module.exports = {}
 
-routes.post('', houseController.createHouse);
-routes.get('', houseController.getAll);
-routes.get('', houseController.getHouseById);
-routes.put('', houseController.updateHouse);
-routes.delete('', houseController.deleteHouse);
+routes.post('/houses/create', houseController.createHouse);
+routes.get('/houses', houseController.getAll);
+routes.get('/houses/:id', houseController.getHouseById);
+routes.put('/houses/update/:id', houseController.updateHouse);
+routes.delete('/houses/delete/:id', houseController.deleteHouse);
 
 module.exports = routes;

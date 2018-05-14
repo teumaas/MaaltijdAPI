@@ -5,10 +5,10 @@ var mealController = require('../controllers/meal.controller');
 
 module.exports = {}
 
-routes.post('', mealController.createMeal);
-routes.get('', mealController.getAll);
-routes.get('', mealController.getMealById);
-routes.put('', mealController.updateMeal);
-routes.delete('', mealController.deleteMeal);
+routes.post('/meals/create', mealController.createMeal);
+routes.get('/meals', mealController.getAll);
+routes.get('/meals/:id', mealController.getMealById);
+routes.put('/meals/update/:id', mealController.updateMeal);
+routes.delete('/meals/delete/:id', mealController.deleteMeal);
 
 module.exports = routes;
