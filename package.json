@@ -1,0 +1,30 @@
+{
+  "name": "programmeren4",
+  "version": "1.0.0",
+  "description": "Deze repo is bedoeld voor de Programmeren 4 assessment NodeJS/Express - Deze opdracht is gemaakt door Tom Smits en Jac Sebregts.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/teumaas/programmeren-4-nodejs.git"
+  },
+  "author": "Tom Smits & Jac Sebregts",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/teumaas/programmeren-4-nodejs/issues"
+  },
+  "homepage": "https://github.com/teumaas/programmeren-4-nodejs#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "express": "^4.16.3",
+    "jwt-simple": "^0.5.1",
+    "mocha": "^5.1.1",
+    "moment": "^2.22.1",
+    "morgan": "^1.9.0"
+  }
+}
