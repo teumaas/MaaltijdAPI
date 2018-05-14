@@ -1,21 +1,22 @@
 {
-  "name": "programmeren4",
+  "name": "MaaltijdAPI",
   "version": "1.0.0",
   "description": "Deze repo is bedoeld voor de Programmeren 4 assessment NodeJS/Express - Deze opdracht is gemaakt door Tom Smits en Jac Sebregts.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha --reporter spec --exit",
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/teumaas/programmeren-4-nodejs.git"
+    "url": "git+https://github.com/teumaas/MaaltijdAPI.git"
   },
   "author": "Tom Smits & Jac Sebregts",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/teumaas/programmeren-4-nodejs/issues"
+    "url": "https://github.com/teumaas/MaaltijdAPI/issues"
   },
-  "homepage": "https://github.com/teumaas/programmeren-4-nodejs#readme",
+  "homepage": "https://github.com/teumaas/MaaltijdAPI#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
@@ -25,6 +26,8 @@
     "jwt-simple": "^0.5.1",
     "mocha": "^5.1.1",
     "moment": "^2.22.1",
-    "morgan": "^1.9.0"
+    "morgan": "^1.9.0",
+    "mysql": "^2.15.0",
+    "nodemon": "^1.17.4"
   }
 }

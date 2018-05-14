@@ -2,7 +2,16 @@ const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
-const port = process.env.PORT || settings.webPort
+const authRoutes = require('./routes/authentication.routes')
+// const List = require('./model/List')
+const AuthController = require('./controllers/authentication.controller')
+const statusRoutes = require('./routes/status.routes')
+
+const ApiError = require('./model/ApiError')
+const config = require('./config/config');
+const db = require('./config/db');
+
+const port = process.env.PORT || 3000
 
 let app = express()
 
