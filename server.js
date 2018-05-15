@@ -3,6 +3,7 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
 const AuthRoutes = require('./routes/authentication.routes')
+const HouseRoutes = require('./routes/house.routes')
 //const List = require('./model/List')
 const AuthController = require('./controllers/authentication.controller')
 const StatusRoutes = require('./routes/status.routes')
@@ -33,10 +34,12 @@ app.use('/api', AuthRoutes)
 
 // On all other routes, check for API key
 // app.all('*', (req, res, next) => { });
-app.all('*', AuthController.validateToken);
+//app.all('*', AuthController.validateToken);
 
 // Regular endpoints
 app.use('/api', StatusRoutes)
+
+app.use('/api', HouseRoutes)
 
 // Postprocessing; catch all non-existing endpoint requests
 app.use('*', function (req, res, next) {
