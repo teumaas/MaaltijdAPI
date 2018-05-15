@@ -1,16 +1,27 @@
 
 let House = require('../model/House');
+let ApiError = require('../model/ApiError');
 let db = require('../config/db');
+
+var express = require('express')
+var bodyParser = require('body-parser')
+
+var app = express()
+app.use(bodyParser.json())
 
 module.exports = {
 
     createHouse(req, res, next) {
         console.log('housecontroller.createHouse')
-       
-        db.query("INSERT INTO studentenhuis (Naam, Adres, UserID) VALUES (?, ?, 1)", req.body.naam, req.body.adres, function (err, rows, fields) {
-            if (err) {
-                const error = new ApiError(err, 412)
-                next(error)
+
+        let query = {
+            sql: "INSERT INTO studentenhuis (Naam, Adres, UserID) VALUES (?, ?, ?)",
+            values: [req.body.naam, req.body.adres, 1]
+        }
+
+        db.query(query, function (err, rows, fields) {
+            if (err) {            
+                next(err)
             } else {
                 res.status(200).json('Success!').end()
             }
@@ -22,8 +33,7 @@ module.exports = {
         
         db.query("SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, ' ', user.Achternaam) AS Contact, user.Email FROM `studentenhuis` JOIN user ON user.ID = studentenhuis.UserID", function (err, rows, fields) {
             if (err) {
-                const error = new ApiError(err, 412)
-                next(error)
+                next(err)
             } else {
                 res.status(200).json(rows).end()
             }
@@ -36,8 +46,7 @@ module.exports = {
         console.log('housecontroller.getHouseID');
         db.query("SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, ' ', user.Achternaam) AS Contact, user.Email FROM `studentenhuis` JOIN user ON user.ID = studentenhuis.UserID WHERE user.ID = ?", id, function (err, rows, fields) {
             if (err) {
-                const error = new ApiError(err, 412)
-                next(error)
+                next(err)
             } else {
                 res.status(200).json(rows[0]).end()
             }
@@ -48,10 +57,14 @@ module.exports = {
     updateHouse(req, res, next) {
         console.log('housecontroller.updateHouse');
 
-        db.query("UPDATE studentenhuis SET Naam = ?, Adres = ?) WHERE ID = ?", req.body.naam, req.body.adres, req.params.id, function (err, rows, fields) {
+        let query = {
+            sql: "UPDATE studentenhuis SET Naam = ?, Adres = ? WHERE ID = ?",
+            values: [req.body.naam, req.body.adres, req.params.id]
+        }
+
+        db.query(query, function (err, rows, fields) {
             if (err) {
-                const error = new ApiError(err, 412)
-                next(error)
+                next(err)
             } else {
                 res.status(200).json(rows[0]).end()
             }
@@ -63,8 +76,7 @@ module.exports = {
 
         db.query("DELETE FROM studentenhuis WHERE ID = ?", req.params.id, function (err, rows, fields) {
             if (err) {
-                const error = new ApiError(err, 412)
-                next(error)
+                next(err)
             } else {
                 res.status(200).json('Info dat de verwijdering is gelukt.').end()
             }
