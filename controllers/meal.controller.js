@@ -48,7 +48,12 @@ module.exports = {
     updateMeal(req, res, next) {
         console.log('mealcontroller.updateMeal');
 
-        db.query('UPDATE maaltijd SET (Naam = ?, Beschrijving = ?, Ingredienten = ?, Allergie = ?, Prijs = ?) WHERE StudentenhuisID = ? AND ID = ?', [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, req.body.userid, req.params.huisid, req.params.maalid] , function (error, rows, fields) {
+        let query = {
+            sql: "UPDATE maaltijd SET Naam = ?, Beschrijving = ?, Ingredienten = ?, Allergie = ?, Prijs = ? WHERE StudentenhuisID = ? AND ID = ?",
+            values: [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, req.params.huisid, req.params.maalid]
+        }
+
+        db.query(query, function (error, rows, fields) {
         if (error) {
             next(error)
         } else {
@@ -60,7 +65,12 @@ module.exports = {
     deleteMeal(req, res, next) {
         console.log('mealcontroller.deleteMeal')
 
-        db.query("DELETE FROM maaltijd WHERE StudentenhuisID = ? AND ID = ?", [req.params.houseid, req.params.mealid], function (error, rows, fields) {
+        let query = {
+            sql: "DELETE FROM maaltijd WHERE StudentenhuisID = ? AND ID = ?",
+            values: [req.params.houseid, req.params.mealid]
+        }
+
+        db.query(query, function (error, rows, fields) {
             if (error) {
                 next(error)
             } else {
