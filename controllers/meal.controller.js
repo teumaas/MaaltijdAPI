@@ -6,7 +6,13 @@ module.exports = {
 
     createMeals(req, res, next) {
         console.log('mealcontroller.createMeal')
-        db.query('INSERT INTO maaltijd (Naam, Beschrijving, Ingredienten, Allergie, Prijs, UserID, StudentenhuisID) VALUES (?, ?, ?, ?, ?, 1, 1)', [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, req.body.userid, req.params.studenthuisid], function (error, rows, fields) {
+
+        let query = {
+            sql: "INSERT INTO maaltijd (Naam, Beschrijving, Ingredienten, Allergie, Prijs, UserID, StudentenhuisID) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            values: [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, 1, 1]
+        }
+
+        db.query(query, function (error, rows, fields) {
             if (error) {
                 next(error)
             } else {
