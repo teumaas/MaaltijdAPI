@@ -5,8 +5,8 @@ var userController = require('../controllers/user.controller');
 
 module.exports = {}
 
-routes.post('/users/create', userController.createUser);
-routes.get('/users', userController.getAll);
-routes.delete('/users/delete/:id', userController.deleteUser);
+routes.post('/studentenhuis/:id/maaltijd/:id/deelnemers', userController.createUser);
+routes.get('/studentenhuis/:id/maaltijd/:id/deelnemers', userController.getAll);
+routes.delete('/studentenhuis/:id/maaltijd/:id/deelnemers', userController.deleteUser);
 
 module.exports = routes;
