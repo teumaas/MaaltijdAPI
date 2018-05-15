@@ -3,64 +3,53 @@ const chai = require('chai')
 const chaiHttp = require('chai-http')
 const server = require('../server')
 
+
 chai.should()
 chai.use(chaiHttp)
 
+// let studentenhuis = {
+//     "ID": 1,
+//     "naam": "Lovensdijk",
+//     "adres": "Lovensdijkstraat, Breda"
+// }
+
 describe('Studentenhuis API POST', () => {
     it('should throw an error when using invalid JWT token', (done) => {
-        chai.request(server)
-            .post('/api/login')
-            .send({
-                "token": "..."
-            })
-            .end((err, res) => {
-                res.should.have.status(401)
-                res.body.should.be.a('object')
+        //
+        // Hier schrijf je jouw testcase.
+        //
+        done()
+    })
 
-                const response = res.body
-                response.should.have.property('token').which.is.an('object')
-                const name = response.name
-                name.should.have.property('token').equals('...')
+    it('should return a studentenhuis when posting a valid object', (done) => {
+        let studentenhuis = {
+            "ID": 1,
+            "naam": "Lovensdijk",
+            "adres": "Lovensdijkstraat, Breda"
+        }
+        chai.request(server)
+            .post('/studentenhuis')
+            .send(studentenhuis)
+            .end((err, res) => {
+                res.should.have.status(200)
+                res.body.should.be.a('object')
+                  
+                res.body.studentenhuis.should.have.property('ID');
+                res.body.studentenhuis.should.have.property('naam');
+                res.body.studentenhuis.should.have.property('adres');
+
                 done()
             })
     })
 
-    it('should return a studentenhuis when posting a valid object', (done) => {
-        chai.request(server)
-            .post('/api/login')
-            .type('form')
-            .send({
-                'username': '...',
-                'password': '...'
-            })
-            .end(function (err, res) {
-                res.should.have.status(200);
-
-                chai.request(server)
-                    .post('/api/houses')
-                    .send({
-                        "name": "...",
-                        "address": "..."
-                    })
-                    .end((err, res) => {
-                        res.should.have.status(200)
-                        res.body.should.be.a('object')
-
-                        const response = res.body
-                        response.should.have.property('').which.is.an('object')
-                        const name = response.name
-                        name.should.have.property('tekst').equals('teskt')
-                        done()
-                    })
-            })
-    })
-
     it('should throw an error when naam is missing', (done) => {
+        let studentenhuis = {
+            "ID": 1,
+            "adres": "Lovensdijkstraat, Breda"
+        }
         chai.request(server)
-            .post('/api/houses')
-            .send({
-                "address": "..."
-            })
+            .post('/studentenhuis')
+            .send(studentenhuis)
             .end((err, res) => {
                 res.should.have.status(412);
                 res.body.should.be.a('object');
@@ -75,11 +64,13 @@ describe('Studentenhuis API POST', () => {
     })
 
     it('should throw an error when adres is missing', (done) => {
+        let studentenhuis = {
+            "ID": 1,
+            "naam": "Lovensdijk"
+        }
         chai.request(server)
-            .post('/api/houses')
-            .send({
-                "name": "Tekst"
-            })
+            .post('/studentenhuis')
+            .send(studentenhuis)
             .end((err, res) => {
                 res.should.have.status(412);
                 res.body.should.be.a('object');
@@ -103,10 +94,23 @@ describe('Studentenhuis API GET all', () => {
     })
 
     it('should return all studentenhuizen when using a valid token', (done) => {
-        //
-        // Hier schrijf je jouw testcase.
-        //
-        done()
+        chai.request(server)
+            .get('/studentenhuis')
+            .end((err, res) => {
+                res.should.have.status(200);
+
+                res.body.should.be.json;
+                res.body.should.be.a('array');
+                  
+                res.body[0].should.have.property('ID');
+                res.body[0].should.have.property('naam');
+                res.body[0].should.have.property('adres');
+                res.body[0].ID.should.equal(1);
+                res.body[0].naam.should.equal('Lovensdijk');
+                res.body[0].adres.should.equal('Lovensdijkstraat, Breda');
+
+                done()
+            })
     })
 })
 
