@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 const AuthRoutes = require('./routes/authentication.routes')
 const HouseRoutes = require('./routes/house.routes')
 const MealRoutes = require('./routes/meal.routes')
+const ParticipantRoutes = require('./routes/participant.routes')
 
 //const List = require('./model/List')
 const AuthController = require('./controllers/authentication.controller')
@@ -44,6 +45,8 @@ app.use('/api', StatusRoutes)
 app.use('/api', HouseRoutes)
 
 app.use('/api', MealRoutes)
+
+app.use('/api', ParticipantRoutes)
 
 // Postprocessing; catch all non-existing endpoint requests
 app.use('*', function (req, res, next) {
