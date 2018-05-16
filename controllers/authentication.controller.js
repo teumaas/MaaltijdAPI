@@ -73,31 +73,18 @@ module.exports = {
      */
     login(req, res, next) {
 
-        // Verify that we receive the expected input
-        try {
-            assert(typeof (req.body.email) === 'string', 'email must be a string.')
-            assert(typeof (req.body.password) === 'string', 'password must be a string.')
-        }
-        catch (ex) {
-            const error = new ApiError(ex.toString(), 422)
-            next(error)
-            return
-        }
-
-        // Verify that the email exists and that the password matches the email.
-        var query = "SELECT * FROM user WHERE Email = ? AND Password = ?";
-        var result = db.query(query, [reg.body.email, req.body.password], function (error, results) {
-            if(error){
-                callback(error, false, null);
+        db.query('SELECT email, password FROM user WHERE email = ?', [req.body.email], function (error, rows, fields) {
+            if (error) {
+                res.status(500).json(error)
             }
 
-            if(results.length > 0){
-                callback(null, true, results[0].ID);
+            if (req.body.email == rows[0] && req.body.password == rows[0]) {
+                var token = auth.encodeToken(req.body.email);
+                res.status(200).json(res.body)
+            } else {
+                res.status(401).json(res.body)
             }
-            else{
-                callback(null, false);
-            }
-        });
+        })
     },
     
     /**
@@ -118,64 +105,25 @@ module.exports = {
             assert(typeof (req.body.password) === 'string', 'password must be a string.')
         }
         catch (ex) {
-            const error = new ApiError(ex.toString(), 412)
+            const error = new Error(ex.toString(), 412)
             next(error)
             return
         }
         
-        let query = "INSERT INTO user (Voornaam, Achternaam, Email, Password) VALUES (?, ?, ?, ?)";
-        db.query(query, [req.body.voornaam, req.body.achternaam, req.body.email, req.body.password], function (err, results) {
-            if(err) {
-                // Duplicate email found
-                const error = new ApiError(err, 412)
-                next(error)
-            } else {
-                // Unique email person was added to the list.
-                // Choices we can make here: 
-                // - return status OK, user must issue separate login request, or
-                // - return valid token, user is immediately logged in.
+        registerQuery = {
+            sql: 'INSERT INTO `user`(Voornaam, Achternaam, Email, Password) VALUES (?, ?, ?, ?)',
+            values: [req.body.voornaam, req.body.achternaam, req.body.email, req.body.password],
+            timeout: 2000
+        }
 
-                // Create an object containing the data we want in the payload.
-                const payload = {
-                    user: req.body.email,
-                    role: 'admin, user'
-                }
-                // Userinfo returned to the caller.
-                const userinfo = {
-                    token: auth.encodeToken(payload),
-                    email: req.body.email
-                }
-                res.status(200).json(userinfo).end()
+        db.query(registerQuery, function (error, rows, field) {
+            if (typeof req.body.voornaam === 'undefined' || typeof req.body.achternaam === 'undefined' || typeof req.body.email === 'undefined' || typeof req.body.password === 'undefined') {
+                res.status(412).json(req.body)
+            } else if (error) {
+                res.status(500).json(req.body)
+            } else {
+                res.status(200).json(req.body)
             }
         })
     }
 }
-
-        
-
-
-
-// personlist.add(user, (err, result) => {
-//     if(err) {
-//         // Duplicate email found
-//         const error = new ApiError(err, 412)
-//         next(error)
-//     } else {
-//         // Unique email person was added to the list.
-//         // Choices we can make here: 
-//         // - return status OK, user must issue separate login request, or
-//         // - return valid token, user is immediately logged in.
-
-//         // Create an object containing the data we want in the payload.
-//         const payload = {
-//             user: req.body.email,
-//             role: 'admin, user'
-//         }
-//         // Userinfo returned to the caller.
-//         const userinfo = {
-//             token: auth.encodeToken(payload),
-//             email: req.body.email
-//         }
-//         res.status(200).json(userinfo).end()
-//     }
-// })
