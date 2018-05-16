@@ -7,8 +7,8 @@ module.exports = {}
 
 routes.post('/studentenhuis', houseController.createHouse);
 routes.get('/studentenhuis', houseController.getAll);
-routes.get('/studentenhuis/:id', houseController.getHouseById);
-routes.put('/studentenhuis/:id', houseController.updateHouse);
-routes.delete('/studentenhuis/:id', houseController.deleteHouse);
+routes.get('/studentenhuis/:huisid', houseController.getHouseById);
+routes.put('/studentenhuis/:huisid', houseController.updateHouse);
+routes.delete('/studentenhuis/:huisid', houseController.deleteHouse);
 
 module.exports = routes;
