@@ -1,11 +1,14 @@
 
-const chai = require('chai')
-const chaiHttp = require('chai-http')
-const server = require('../server')
+const db = require("../config/db");
+const chai = require('chai');
+const chaiHttp = require('chai-http');
+const server = require('../server');
 
+let should = chai.should();
+let expect = chai.expect;
 
-chai.should()
-chai.use(chaiHttp)
+chai.should();
+chai.use(chaiHttp);
 
 // let deelnemer = {
 //     "ID": 1,
