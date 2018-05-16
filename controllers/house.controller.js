@@ -2,6 +2,7 @@
 let House = require('../model/House');
 let ApiError = require('../model/ApiError');
 let db = require('../config/db');
+let auth = require('../util/auth/authentication')
 
 module.exports = {
 
@@ -48,6 +49,7 @@ module.exports = {
     },
 
     getAll(req, res, next){
+
         console.log('housecontroller.getAll');
         let query = {
             sql : 'SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, \' \', user.Achternaam) AS Contact, user.Email FROM `studentenhuis` RIGHT JOIN user ON user.ID = studentenhuis.UserID',

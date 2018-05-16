@@ -37,7 +37,7 @@ app.use('/api', AuthRoutes)
 
 // On all other routes, check for API key
 // app.all('*', (req, res, next) => { });
-//app.all('*', AuthController.validateToken);
+app.all('*', AuthController.validateToken);
 
 // Regular endpoints
 app.use('/api', StatusRoutes)

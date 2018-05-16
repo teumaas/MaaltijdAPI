@@ -80,7 +80,9 @@ module.exports = {
 
             if (req.body.email == rows[0] && req.body.password == rows[0]) {
                 var token = auth.encodeToken(req.body.email);
-                res.status(200).json(res.body)
+                res.status(200).json({
+                    "token": token
+                })
             } else {
                 res.status(401).json(res.body)
             }
