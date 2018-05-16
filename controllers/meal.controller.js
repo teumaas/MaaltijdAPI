@@ -30,7 +30,7 @@ module.exports = {
                 
                 let query = {
                     sql: "INSERT INTO maaltijd (Naam, Beschrijving, Ingredienten, Allergie, Prijs, UserID, StudentenhuisID) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                    values: [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, 1, req.params.huisid],
+                    values: [req.body.naam, req.body.beschrijving, req.body.ingredienten, req.body.allergie, req.body.prijs, userOid, req.params.huisid],
                     timeout: 2000
                 };
             
@@ -43,7 +43,7 @@ module.exports = {
                         let query = {
                             sql: 'SELECT ID, Beschrijving, Ingredienten, Allergie, Prijs FROM maaltijd WHERE ID = ?',
                             // Get current id
-                            values: [5],
+                            values: [0],
                             timeout: 2000
                         };
 

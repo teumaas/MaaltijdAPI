@@ -9,7 +9,7 @@ module.exports = {
     createHouse(req, res, next){
         console.log('housecontroller.createHouse');
         
-        let userId = '1';
+        let userId = 1;
 
        
             //Bouwt query op
@@ -29,7 +29,7 @@ module.exports = {
 
                     //Bouwt query op
                     let query = {
-                        sql: 'SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, \' \', user.Achternaam) AS Contact, user.Email FROM `studentenhuis` JOIN user ON user.ID = studentenhuis.UserID WHERE studentenhuis.ID = ' + id,
+                        sql: 'SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, \' \', user.Achternaam) AS Contact, user.Email FROM `studentenhuis` JOIN user ON user.ID = studentenhuis.UserID WHERE studentenhuis.ID =  id',
                         timeout: 2000
                     };
 
@@ -45,7 +45,6 @@ module.exports = {
                     });
                 }
             });
-
     },
 
     getAll(req, res, next){
@@ -85,7 +84,7 @@ module.exports = {
             } else {
                 
                 let query = {
-                    sql: 'SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, user.Achternaam) AS Contact, user.Email FROM `studentenhuis` JOIN user ON user.ID = studentenhuis.UserID WHERE studentenhuis.ID = ?',
+                    sql: 'SELECT studentenhuis.ID, studentenhuis.Naam, studentenhuis.Adres, CONCAT(user.Voornaam, user.Achternaam) AS Contact, user.Email FROM `studentenhuis JOIN user ON user.ID = studentenhuis.UserID WHERE studentenhuis.ID = ?',
                     values: req.params.huisid,
                     timeout: 2000
                 };
