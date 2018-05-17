@@ -15,7 +15,7 @@ const ApiError = require('./model/ApiError')
 const config = require('./config/config');
 const db = require('./config/db');
 
-const port = process.env.PORT ||  app.get('PORT')
+const port = process.env.PORT || app.get('PORT')
 
 let app = express()
 
